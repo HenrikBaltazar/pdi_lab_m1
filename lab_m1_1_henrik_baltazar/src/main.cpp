@@ -4,11 +4,42 @@
 using namespace std;
 
 int height,width,channels,type,pixels=0;
+int bMin, bMax, bAvg=0;
+int gMin, gMax, gAvg=0;
+int rMin, rMax, rAvg=0;
+
 string input = "";
 string output = "";
 int operation = 0;
 
 cv::Mat image;
+
+int getChannelMinMax(int channel, bool min) {
+    cv::Vec3b pixel = image.at<cv::Vec3b>(0, 0);
+    uchar minmax=pixel[channel];;
+    for (int row=0;row<image.rows;++row) {
+        for (int col=0;col<image.cols;++col) {
+            pixel = image.at<cv::Vec3b>(row, col);
+            if (min) {
+                if (pixel[channel]<minmax) minmax=pixel[channel];
+            }else {
+                if (pixel[channel]>minmax) minmax=pixel[channel];
+            }
+        }
+    }
+    return minmax;
+}
+
+int getChannelAvg(int channel) {
+    int sum = 0;
+    for (int row=0;row<image.rows;++row) {
+        for (int col=0;col<image.cols;++col) {
+            cv::Vec3b pixel = image.at<cv::Vec3b>(row, col);
+            sum+=pixel[channel];
+        }
+    }
+    return sum/pixels;
+}
 
 void getImageInfo() {
     height = image.rows;
@@ -16,6 +47,15 @@ void getImageInfo() {
     channels = image.channels();
     type = image.type();
     pixels = image.rows*image.cols;
+    bMin = getChannelMinMax(0, true);
+    bMax = getChannelMinMax(0, false);
+    bAvg = getChannelAvg(0);
+    gMin = getChannelMinMax(1, true);
+    gMax = getChannelMinMax(1, false);
+    gAvg = getChannelAvg(1);
+    rMin = getChannelMinMax(2, true);
+    rMax = getChannelMinMax(2, false);
+    rAvg = getChannelAvg(2);
 }
 
 void showImageInfo() {
@@ -24,7 +64,13 @@ void showImageInfo() {
     cout << "Numero de canais: " << channels << endl;
     cout << "Tipo da imagem: " << type << endl;
     cout << "Quantidade de pixels: " << pixels << endl;
-    //cout << "Valor minimo: " << image.min() << endl;
+    if (operation != 2) {
+        cout << "R: (Min: " << rMin << "; Max: " << rMax << "; Media: " << rAvg << ")" << endl;
+        cout << "G: (Min: " << gMin << "; Max: " << gMax << "; Media: " << gAvg << ")" << endl;
+        cout << "B: (Min: " << bMin << "; Max: " << bMax << "; Media: " << bAvg<< ")" << endl;
+    }else {
+        cout << "Min: " << bMin << "; Max: " << bMax << "; Media: " << bAvg << endl;
+    }
 }
 
 void grayscale() {
@@ -47,7 +93,8 @@ void grayscale() {
 
         }
     }
-
+    getImageInfo();
+    showImageInfo();
     cv::imwrite("../../saida.png", gray_image);
 }
 
@@ -79,10 +126,10 @@ int main( int argc, const char** argv ) {
         return 1;
     }
 
+    getImageInfo();
 
     switch (operation) {
         case 1:
-            getImageInfo();
             showImageInfo();
             break;
         case 2:
