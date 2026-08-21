@@ -39,6 +39,10 @@
 *.out
 *.app
 
+#idea directory
+.idea/
+*/.idea/
+
 # Build directories
 build/
 Build/

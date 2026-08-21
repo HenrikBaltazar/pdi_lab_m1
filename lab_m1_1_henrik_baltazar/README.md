@@ -17,7 +17,7 @@ cmake --build build
 ```
 
 ## Como executar
-*O binário será compilado no diretório 'build', execute o comando a seguir a partir deste diretório.*
+*O binário será compilado no diretório 'cmake-build-debug', execute o comando a seguir a partir deste diretório.*
 
 ```shell
 ./pdi_lab \
