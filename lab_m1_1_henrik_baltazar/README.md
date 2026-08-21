@@ -8,16 +8,12 @@ Todo projeto foi desenvolvido no CLion da JetBrains através da licença de estu
 
 ## Como compilar
 ```shell
-cmake -S . -B build 
-cmake --build build
-# Windows 
-.\build\Debug\pdi_app.exe 
-# Linux/macOS 
-./build/pdi_app
+cmake -S . -B build/unix-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
+cmake --build build/unix-debug
 ```
 
 ## Como executar
-*O binário será compilado no diretório 'cmake-build-debug', execute o comando a seguir a partir deste diretório.*
+*O binário será compilado no diretório 'build/unix-debug', execute o comando a seguir a partir deste diretório.*
 
 ```shell
 ./pdi_lab \
