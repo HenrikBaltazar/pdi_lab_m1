@@ -17,11 +17,11 @@ cv::Mat image;
 cv::Mat output_image;
 
 int getChannelMinMax(int channel, bool min) {
-    cv::Vec3b pixel = image.at<cv::Vec3b>(0, 0);
+    cv::Vec3b pixel = output_image.at<cv::Vec3b>(0, 0);
     uchar minmax=pixel[channel];;
-    for (int row=0;row<image.rows;++row) {
-        for (int col=0;col<image.cols;++col) {
-            pixel = image.at<cv::Vec3b>(row, col);
+    for (int row=0;row<output_image.rows;++row) {
+        for (int col=0;col<output_image.cols;++col) {
+            pixel = output_image.at<cv::Vec3b>(row, col);
             if (min) {
                 if (pixel[channel]<minmax) minmax=pixel[channel];
             }else {
@@ -36,7 +36,7 @@ int getChannelAvg(int channel) {
     int sum = 0;
     for (int row=0;row<image.rows;++row) {
         for (int col=0;col<image.cols;++col) {
-            cv::Vec3b pixel = image.at<cv::Vec3b>(row, col);
+            cv::Vec3b pixel = output_image.at<cv::Vec3b>(row, col);
             sum+=pixel[channel];
         }
     }
@@ -44,11 +44,11 @@ int getChannelAvg(int channel) {
 }
 
 void getImageInfo() {
-    height = image.rows;
-    width = image.cols;
-    channels = image.channels();
-    type = image.type();
-    pixels = image.rows*image.cols;
+    height = output_image.rows;
+    width = output_image.cols;
+    channels = output_image.channels();
+    type = output_image.type();
+    pixels = output_image.rows*output_image.cols;
     bMin = getChannelMinMax(0, true);
     bMax = getChannelMinMax(0, false);
     bAvg = getChannelAvg(0);
@@ -152,11 +152,11 @@ void generateQuantizedImage(int quant) {
 int main( int argc, const char** argv ) {
 
     const string keys =
-    "{help h usage ? |                         |    example: pdi_app --input=cat.png --output=/users/me/desktop/dog.png --operation=quantize --levels=8}"
-    "{input          |../images/input/input.png|    path for the file image to read}"
-    "{output         |../images/output/        |    path for the output folder}"
-    "{operation      |inspect                  |    inspect: Get image info;\n		copy: Copy image;\n		channel_b: Generate channel B image\n		channel_g: Generate channel G image;\n		channel_r: Generate channel R image;\n		grayscale_average: Generate average grayscale image;\n		grayscale_weighted: Generate weighted grayscale image;\n		quantize: Generate specified levels images.}"
-    "{levels         |16                       |    2, 4, 8 or 16 levels}"
+    "{help h usage ? |                             |    example: pdi_app --input=cat.png --output=/users/me/desktop/dog.png --operation=quantize --levels=8}"
+    "{input          |images/input/input.png |    path for the file image to read}"
+    "{output         |images/output/         |    path for the output folder}"
+    "{operation      |inspect                      |    inspect: Get image info;\n		copy: Copy image;\n		channel_b: Generate channel B image\n		channel_g: Generate channel G image;\n		channel_r: Generate channel R image;\n		grayscale_average: Generate average grayscale image;\n		grayscale_weighted: Generate weighted grayscale image;\n		quantize: Generate specified levels images.}"
+    "{levels         |16                           |    2, 4, 8 or 16 levels}"
     ;
     cv::CommandLineParser parser(argc, argv,keys);
     parser.about("Henrik Baltazar - Lab M1 parte 1");
