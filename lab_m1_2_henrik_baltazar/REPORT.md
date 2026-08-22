@@ -1,6 +1,6 @@
 # Mini relatório
 
-## Lab M1 Parte 01
+## Lab M1 Parte 02
 ### 1. Qual é a diferença entre resolução espacial e resolução radiométrica?
 A resolução espacial é basicamente o tamanho da imagem, ou seja, as dimensões da matriz de pixels que formam a imagem, já a resolução radiométrica diz respeito aos tons possíveis por pixel, onde neste trabalho trabalhamos com uma resolução radiométrica de 256 tons.
 

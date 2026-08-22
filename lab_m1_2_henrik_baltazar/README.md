@@ -1,4 +1,4 @@
-# Lab M1 parte 1
+# Lab M1 parte 2
 Aluno: Henrik Gomes Baltazar;<br>
 Linguagem: C++;<br>
 Dependências: OpenCV, cmake(4.4.2), ninja(1.13.2), g++(16.1.1 20260728);<br>

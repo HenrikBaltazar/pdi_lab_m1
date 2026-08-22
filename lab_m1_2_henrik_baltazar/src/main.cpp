@@ -13,7 +13,7 @@ string output = "";
 string operation = "";
 int level = 0;
 double alpha = 0.0;
-uchar value = 0;
+int value = 0;
 uchar threshold = 0;
 
 cv::Mat image;
@@ -342,7 +342,7 @@ int main( int argc, const char** argv ) {
         return 1;
     }
     if (operation == "threshold") {
-        cout << "Generate binary image for T=50 and T=200" << endl;
+        cout << "Generate binary image for threshold " << to_string(threshold) << endl;
         generateThresholdImage();
         exportImage("threshold_"+to_string(threshold)+".png");
         return 1;
